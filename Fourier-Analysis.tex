@@ -1,0 +1,96 @@
+\documentclass[a4paper]{article}
+
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage{enumitem}
+\usepackage{amsmath, amssymb}
+\usepackage[margin=1in]{geometry}
+
+% figure support
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+\usepackage{xcolor}
+
+\newcommand{\incfig}[2][1]{
+    \def\svgwidth{#1\columnwidth}
+    \import{./figures/}{#2.pdf_tex}
+}
+
+\begin{document}
+\section{The Genesis of Fourier Analysis}
+\subsection{}
+\begin{enumerate}[label=(\alph*)]
+    \item |z| is length of vector (x, y) in z-plane
+    \item if |z|=0, then x = 0 and y = 0, therefore z=0
+    \item $|\lambda z|=((\lambda x)^2+(\lambda y)^2)^{\frac{1}{2}} = |\lambda|(x^2+y^2)^{\frac{1}{2}}=|\lambda| |z|$
+    \item $|z_1z_2|=|r_1r_2e^{j\omega_1+j\omega_2}|=r_1r_2=|z_1| |z_2|$
+
+        $|z_1+z_2|=|r_1e^{j\omega_1}+r_2e^{j\omega_2}|=|r_1+r_2e^{j(\omega_2-\omega_1)}|\le |r_1| +|r_2| =|z_1|+|z_2|$
+    \item $|\frac{1}{z}|=|\frac{1}{re^{j\omega}}|=\frac{1}{r}=\frac{1}{|z|}$
+\end{enumerate}
+\subsection{}
+\begin{enumerate}[label=(\alph*)]
+    \item $\overline{z}$ is reflection symmetry about x axis.
+    \item $|z|^2=r^2=re^{j\omega}\cdot re^{-j\omega}=z\overline{z}$
+    \item if $z$ belongs to the unit circle, then $|z|=1$, $z=e^{j\omega}$, therefore $\frac{1}{z}=e^{-j\omega}=\overline{z}$
+\end{enumerate}
+\subsection{}
+\begin{enumerate}[label=(\alph*)]
+    \item if there are two different limits: $\omega_1$, $\omega_2$,
+        then 
+        $$\lim_{n \to \infty} |\omega_n-\omega_1|+|\omega_n-\omega_2|=0$$
+        however,
+        $$\lim_{n \to \infty} |\omega_n-\omega_1|+|\omega_n-\omega_2|\ge \lim_{n \to \infty} |(\omega_n-\omega_1)-(\omega_n-\omega_2)|=\lim_{n \to \infty} |\omega_1-\omega_2|> 0.$$
+        contrast with preceding results, therefore a converging sequence of complex numbers has a unique limit.
+    \item \textbf{assume complex numbers converges, prove it is a Cauchy sequence.}
+
+    $\exists\omega\in \mathbb{C}$, $\forall \frac{\epsilon}{2} >0$, $\exists N>0$, when $n>N$, then $|\omega_n-\omega|<\frac{\epsilon}{2}$
+
+    $\therefore \forall n, m > N, |\omega_n-\omega_m|=|\omega_n-\omega+\omega-\omega_m|\le |\omega_n-\omega|+|\omega_m-\omega|<\frac{\epsilon}{2}+\frac{\epsilon}{2}=\epsilon$
+
+    $\{\omega_n\}^\infty_{n=1}$ is a Cauchy sequence.
+
+    \textbf{assume sequence is a Cauchy sequence, prove it converges.}
+
+    $\forall n, m > N$, $|\omega_n-\omega_m|=\sqrt{(x_n-x_m)^2+(y_n-y_m)^2} <\epsilon$, which $x_{n,m}, y_{n,m}\in \mathbb{R}$
+
+    $\therefore \sqrt{(x_n-x_m)^2} < \epsilon$, $\sqrt{(y_n-y_m)^2} < \epsilon$
+
+    $\therefore \{x_n\}^{\infty}_{n=1}$ is Cauchy sequence in $\mathbb{R}$, so do $\{y_n\}^{\infty}_{n=1} $.
+
+    $\therefore \exists x_0, y_0 \in \mathbb{R} $ such that
+    \begin{align*}
+        \lim_{n \to \infty} |x_n-x_0|=0\\
+        \lim_{n \to \infty} |y_n-y_0|=0
+    .\end{align*}
+    thus $\exists z_0=x_0+y_0i \in \mathbb{C}$,
+    \begin{align*}
+        \lim_{n \to \infty} |z_n-z_0|=\lim_{n \to \infty} \sqrt{(x_n-x_0)^2+(y_n-y_0)^2} =\lim_{n \to \infty} \sqrt{0+0}  =0
+    .\end{align*}
+    $\therefore \{z_n\}^{\infty}_{n=1}$ sequence converges.
+
+    \item since $\sum_{n=1}^{\infty} a_n $ converges, set $A_N=\sum_{n=1}^{N} a_n $, 
+
+        then according to the Cauchy criterion, $\forall \epsilon > 0$, there exists $N > 0$, such that
+        \begin{align*}
+            |A_n-A_m| < \epsilon, \text{whenever } n, m>N
+        .\end{align*}
+        thus (assume $n > m$)
+        \begin{align*}
+            |S_n-S_m| =|z_n+z_{n-1}\ldots +z_m|\le |z_n|+\ldots+|z_m|\le a_n+\ldots+a_m=|A_n-A_m|<\epsilon
+        .\end{align*}
+        $\therefore \{S_n\}_{n=1}^{\infty}$ is a Cauchy sequence, $\{S_n\}_{n=1}^{\infty}=\sum_{n} z^n$ converges.
+\end{enumerate}
+
+\subsection{}
+\begin{enumerate}[label=(\alph*)]
+    \item \textbf{prove $S_n=\sum_{n=0}^{\infty} z_{n}=\sum_{n=0}^{\infty} \frac{z^n}{n!}$ converges}
+
+        since $a_n=\frac{|z|^n}{n!}\ge |z_n|$, $\sum_{n=0}^{\infty} a_n=e^{|z|}$ converges, from (3.c) result we know $\sum_{n=0}^{\infty} z_n$ converges.
+
+        \textbf{prove $S_n=\sum_{n=0}^{\infty} z_{n}=\sum_{n=0}^{\infty} \frac{z^n}{n!}$ uniformly converges}
+
+
+\end{enumerate}
+\end{document}
